@@ -6,7 +6,6 @@ package discountstrategy;
  */
 public interface DiscountStrategy {
 
-    
     public abstract double getDiscount();
     
 }
