@@ -10,60 +10,12 @@ public class ProductDatabase {
     private String description;
     private double price;
     private int discountLevel;
-
     private ProductDatabase[] productDatabase = new ProductDatabase[5];
-
-    public String getProductCode() {
-        return productCode;
-    }
-
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public int getDiscountLevel() {
-        return discountLevel;
-    }
-
-    public void setDiscountLevel(int discountLevel) {
-        this.discountLevel = discountLevel;
-    }
-
-//    public void setProductDatabase(ProductDatabase[] productDatabase) {
-//        this.productDatabase = productDatabase;
-//    }
 
     public ProductDatabase() {
         ProductDatabase[] productDatabase = new ProductDatabase[5];
-        //String registerProductCode = productCode;
 
-       
-    }
-
-//    public ProductDatabase(String productCode, String description, double price, int discountLevel) {
-//        this.productDatabase = new ProductDatabase[5];
-//
-//    }
-
-    public void productCodeLookup(String productCode) {
-        System.out.println("I made it to the Product Database");
-         productDatabase[0] = new ProductDatabase();
+        productDatabase[0] = new ProductDatabase();
         productDatabase[0].setProductCode("886878841132");
         productDatabase[0].setDescription("LEVI DOCKERS");
         productDatabase[0].setPrice(45.99);
@@ -91,13 +43,76 @@ public class ProductDatabase {
         productDatabase[4].setProductCode("001357375");
         productDatabase[4].setDescription("3PK STRIPE SOCKS");
         productDatabase[4].setPrice(2.99);
-        productDatabase[4].setDiscountLevel(21);String registerProductCode = productCode;
+        productDatabase[4].setDiscountLevel(21);
+
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public String getDescription(String productCode) {
+        String registerProductCode = productCode;
+        for (ProductDatabase pd : productDatabase) {
+            if (pd.productCode.equals(registerProductCode)) {
+                description = pd.description;
+            }
+        }
+        return description;
+    }
+
+    public double getPrice(String productCode) {
+        String registerProductCode = productCode;
+        for (ProductDatabase pd : productDatabase) {
+            if (pd.productCode.equals(registerProductCode)) {
+                price = pd.price;
+            }
+        }
+        return price;
+    }
+
+    public int getDiscountLevel(String productCode) {
+        String registerProductCode = productCode;
+        for (ProductDatabase pd : productDatabase) {
+            if (pd.productCode.equals(registerProductCode)) {
+                discountLevel = pd.discountLevel;
+            }
+        }
+        return discountLevel;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setDiscountLevel(int discountLevel) {
+        this.discountLevel = discountLevel;
+    }
+
+//    public void setProductDatabase(ProductDatabase[] productDatabase) {
+//        this.productDatabase = productDatabase;
+//    }
+//    public ProductDatabase(String productCode, String description, double price, int discountLevel) {
+//        this.productDatabase = new ProductDatabase[5];
+//
+//    }
+    public void productCodeLookup(String productCode) {
+        System.out.println("I made it to the Product Database");
+        String registerProductCode = productCode;
         for (ProductDatabase pd : productDatabase) {
             if (pd.productCode.equals(registerProductCode)) {
                 description = pd.description;
                 price = pd.price;
                 discountLevel = pd.discountLevel;
-               System.out.println(discountLevel); 
+                System.out.println(discountLevel);
             }
         }
     }

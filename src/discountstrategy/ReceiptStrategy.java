@@ -6,6 +6,8 @@ package discountstrategy;
  */
 public interface ReceiptStrategy {
 
+    public String customerNumber = "";
+
     public abstract void displayReceipt();
-    
+
 }
