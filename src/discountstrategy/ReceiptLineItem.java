@@ -9,25 +9,42 @@ public class ReceiptLineItem {
     private String productCode;
     private String productDescription;
     private int quantityPurchased;
-    private double price;
+    private double unitPrice;
     private double discount;
+    private Product product;
+    private final int MINIMUM_QUANTITY = 1;
 
     private ReceiptLineItem[] receiptLineItem = new ReceiptLineItem[0];
 
-    public ReceiptLineItem(String productCode, String productDescription, int quantityPurchased, double price, double discount) {
-        this.productCode = productCode;
-        this.productDescription = productDescription;
+    public ReceiptLineItem(Product product, int quantityPurchased) {
+        if (product == null || quantityPurchased < MINIMUM_QUANTITY) {
+            throw new IllegalArgumentException();
+        }
+        this.product = product;
         this.quantityPurchased = quantityPurchased;
-        this.price = price;
-        this.discount = discount;
     }
 
-    
-    public double getDiscount() {
+    public final double getUnitPrice() {
+        return product.getUnitPrice();
+    }
+
+    public final String getDescription() {
+        return product.getProductDescription();
+    }
+
+    public final int getQuantityPurchased() {
+        return quantityPurchased;
+    }
+
+    public final String getProductCode() {
+        return productCode;
+    }
+
+    public final double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(double discount) {
+    public final void setDiscount(double discount) {
         this.discount = discount;
     }
 
@@ -40,7 +57,7 @@ public class ReceiptLineItem {
     }
 
     public void addToArray(ReceiptLineItem item) {
-         // needs validation
+        // needs validation
         System.out.println(receiptLineItem.length);
         ReceiptLineItem[] tempItems = new ReceiptLineItem[receiptLineItem.length + 1];
         System.arraycopy(receiptLineItem, 0, tempItems, 0, receiptLineItem.length);

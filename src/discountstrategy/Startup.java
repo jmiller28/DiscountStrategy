@@ -1,49 +1,30 @@
 package discountstrategy;
 
 /**
+ * This class ...
+ * 
+ * Note: JavaDoc is not complete yet!
  *
  * @author jmiller
+ * @version 14.10.01 alpha
  */
 public class Startup {
-
-    private String description;
-    ProductDatabase[] productDatabase = new ProductDatabase[5];
-    private static ConsoleReceipt consoleReceipt;
-    private static ReceiptStrategy receipt = new ConsoleReceipt();
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("I'm in the Startup");
-
-        startNewSale1();
-        System.out.println("I'm back in the Startup");
+        PointOfSaleRegister sale1 = new PointOfSaleRegister();
+        sale1.startNewSale("00002060");
+        sale1.addLineItem("886878841132", 1);
+        sale1.addLineItem("008498255", 2);
+        sale1.completeSale();
+        
+        PointOfSaleRegister sale2 = new PointOfSaleRegister();
+        sale2.startNewSale("0");
+        sale2.addLineItem("017133562060", 1);
+        sale2.addLineItem("009270653", 2);
+        sale2.addLineItem("001357375", 5);
+        sale2.completeSale();
     }
-
-    public static void startNewSale1() {
-        PointOfSaleRegister register = new PointOfSaleRegister(receipt, "00002060");
-        register.AddLineItem("886878841132");
-        register.AddLineItem("008498255");
-        register.AddLineItem("886878841132");
-        register.AddLineItem("008498255");
-
-    }
-
-    public static void addItem1() {
-
-    }
-
-    public static void addItem2() {
-
-    }
-
-    public static void addItem3() {
-
-    }
-
-    public static void completeSale1() {
-
-    }
-
 }
