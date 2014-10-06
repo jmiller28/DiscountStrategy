@@ -1,76 +1,86 @@
 package discountstrategy;
 
 /**
+ * This class ...
+ * 
+ * Note: JavaDoc is not complete yet!
  *
- * @author jmiller
+ * @author John Miller
+ * @version 1.0.0
  */
 public class ReceiptLineItem {
 
-    private String productCode;
-    private String productDescription;
-    private int quantityPurchased;
-    private double unitPrice;
-    private double discount;
     private Product product;
-    private final int MINIMUM_QUANTITY = 1;
+    private int quantityPurchased;
+//    private String productCode;
+    private int minimumQuantity = 1;
 
-    private ReceiptLineItem[] receiptLineItem = new ReceiptLineItem[0];
-
+    /**
+     * 
+     * @param product
+     * @param quantityPurchased 
+     */
     public ReceiptLineItem(Product product, int quantityPurchased) {
-        if (product == null || quantityPurchased < MINIMUM_QUANTITY) {
+        if (product == null || quantityPurchased < minimumQuantity) {
             throw new IllegalArgumentException();
         }
         this.product = product;
         this.quantityPurchased = quantityPurchased;
     }
 
-    public final double getUnitPrice() {
-        return product.getUnitPrice();
+    /**
+     * 
+     * @return 
+     */
+    public final Product getProduct() {
+        return product;
     }
 
-    public final String getDescription() {
+    /**
+     * 
+     * @return 
+     */
+    public final String getProductCode() {
+        return product.getProductCode();
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public final String getProductDescription() {
         return product.getProductDescription();
     }
 
+    /**
+     * 
+     * @return 
+     */
     public final int getQuantityPurchased() {
         return quantityPurchased;
     }
 
-    public final String getProductCode() {
-        return productCode;
+    /**
+     * 
+     * @return 
+     */
+    public final double getUnitPrice() {
+        return product.getUnitPrice();
     }
 
-    public final double getDiscount() {
-        return discount;
+    /**
+     * 
+     * @return 
+     */
+    public final double getDiscountAmount() {
+        return product.getDiscountAmount(quantityPurchased, getUnitPrice());
     }
-
-    public final void setDiscount(double discount) {
-        this.discount = discount;
+    
+    /**
+     * 
+     * @return 
+     */
+    public final double getLineItemTotal() {
+        return (product.getUnitPrice() * getQuantityPurchased()) - getDiscountAmount();
     }
-
-    public ReceiptLineItem[] getReceiptLineItem() {
-        return receiptLineItem;
-    }
-
-    public void setReceiptLineItem(ReceiptLineItem[] receiptLineItem) {
-        this.receiptLineItem = receiptLineItem;
-    }
-
-    public void addToArray(ReceiptLineItem item) {
-        // needs validation
-        System.out.println(receiptLineItem.length);
-        ReceiptLineItem[] tempItems = new ReceiptLineItem[receiptLineItem.length + 1];
-        System.arraycopy(receiptLineItem, 0, tempItems, 0, receiptLineItem.length);
-        tempItems[receiptLineItem.length] = item;
-        receiptLineItem = tempItems;
-        System.out.println("I made it to the Receipt Line Item");
-        System.out.println(receiptLineItem.length);
-    }
-
-    public void gotoDiscount() {
-        System.out.println("I made it to the Receipt Line Item");
-        DiscountStrategy discountStrategy = new PercentOffDiscount();
-        discountStrategy.getDiscount();
-    }
-
 }

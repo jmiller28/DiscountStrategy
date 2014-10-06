@@ -1,22 +1,40 @@
 package discountstrategy;
 
 /**
+ * This class ...
+ * 
+ * Note: JavaDoc is not complete yet!
  *
- * @author jmiller
+ * @author John Miller
+ * @version 1.0.0
  */
 public class PercentOffDiscount implements DiscountStrategy {
 
-    private double discountPercent;
-    private final double DISCOUNT_PERCENT = .2;
+    private double percentOff = .2;
 
-    public PercentOffDiscount() {
-        discountPercent = DISCOUNT_PERCENT;
+    /**
+     * 
+     * @param quantityPurchased
+     * @param unitPrice
+     * @return 
+     */
+    @Override
+    public double getDiscountAmount(int quantityPurchased, double unitPrice) {
+        double amount = unitPrice * quantityPurchased * percentOff;
+        return amount;
     }
 
+    /**
+     * 
+     * @param quantityPurchased
+     * @param unitPrice
+     * @return 
+     */
     @Override
-    public double getDiscount() {
+    public double getPriceAfterDiscount(int quantityPurchased, double unitPrice) {
+        double price = unitPrice - getDiscountAmount(quantityPurchased, unitPrice);
 
-        return discountPercent;
+        return price;
     }
 
 }

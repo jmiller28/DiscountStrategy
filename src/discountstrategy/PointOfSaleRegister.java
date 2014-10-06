@@ -2,38 +2,49 @@ package discountstrategy;
 
 /**
  * This class ...
- *
+ * 
  * Note: JavaDoc is not complete yet!
  *
- * @author jmiller
- * @version 14.10.01 alpha
+ * @author John Miller
+ * @version 1.0.0
  */
 public class PointOfSaleRegister {
 
-    private ReceiptLineItem receiptLineItem;
+    private ReceiptStrategy receiptStrategy;
     private Receipt receipt;
-    private FakeDatabase fakeDatabase = new FakeDatabase();
-    
-    public PointOfSaleRegister() {
+    private DataAccessStrategy db;
 
+    /**
+     * 
+     * @param db 
+     */
+    public PointOfSaleRegister(DataAccessStrategy db) {
+        this.db = db;
+        this.receiptStrategy = receiptStrategy;
     }
 
-    public void startNewSale(String customerNumber) {
-        receipt = new Receipt(customerNumber);
-        
-//        fakeDatabase.customerSearch(customerNumber);
-//
-//        System.out.println(fakeDatabase.customerSearch(customerNumber).getCustomerName());
+    /**
+     * 
+     * @param customerNumber 
+     */
+    public final void startNewSale(String customerNumber) {
+        receipt = new Receipt(customerNumber, db);
     }
 
-    public void addLineItem(String productCode, int quantity) {
-        receiptLineItem = new ReceiptLineItem(fakeDatabase.productSearch(productCode), quantity);
-        System.out.println(fakeDatabase.productSearch(productCode).getProductDescription());
-        receipt.addLineItem(receiptLineItem);
+    /**
+     * 
+     * @param productCode
+     * @param quantity 
+     */
+    public final void addLineItem(String productCode, int quantity) {
+        receipt.addLineItem(productCode, quantity);
     }
 
-    public void completeSale() {
-        System.out.println("Sale is complete");
+    /**
+     * 
+     */
+    public final void completeSale() {
+        receipt.outputReceipt();
     }
 
 }

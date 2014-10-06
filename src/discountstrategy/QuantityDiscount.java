@@ -1,33 +1,50 @@
 package discountstrategy;
 
 /**
+ * This class ...
+ * 
+ * Note: JavaDoc is not complete yet!
  *
- * @author jmiller
+ * @author John Miller
+ * @version 1.0.0
  */
 public class QuantityDiscount implements DiscountStrategy {
 
-    private double discountPercent;
-    private int quantityPurchased;
-    private final int MINIMUM_QUANTITY = 5;
-    private final double DISCOUNT_PERCENT = .1;
+    private int minimumQuantity = 5;
+    private double percentOff = .1;
 
-    public QuantityDiscount() {
-        
-    }
-    
-    public QuantityDiscount(int quantityPurchased) {
-        this.quantityPurchased = quantityPurchased;
-
-        discountPercent = .0;
-        if (quantityPurchased >= MINIMUM_QUANTITY) {
-            discountPercent = DISCOUNT_PERCENT;
-        }
-    }
-
+    /**
+     * 
+     * @param quantityPurchased
+     * @param unitPrice
+     * @return 
+     */
     @Override
-    public double getDiscount() {
+    public double getDiscountAmount(int quantityPurchased, double unitPrice) {
+        double amount = 0;
 
-        return discountPercent;
+        if (quantityPurchased >= minimumQuantity) {
+            amount = unitPrice * quantityPurchased * percentOff;
+        }
+
+        return amount;
+    }
+
+    /**
+     * 
+     * @param quantityPurchased
+     * @param unitPrice
+     * @return 
+     */
+    @Override
+    public double getPriceAfterDiscount(int quantityPurchased, double unitPrice) {
+        double price = 0;
+
+        if (quantityPurchased >= minimumQuantity) {
+            price -= getDiscountAmount(quantityPurchased,unitPrice);
+        }
+
+        return price;
     }
 
 }

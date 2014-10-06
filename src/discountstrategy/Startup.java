@@ -1,30 +1,32 @@
 package discountstrategy;
 
 /**
- * This class ...
+ * This class is used to start the program. It passes hard coded values to a POS register object 
+ * to simulate starting a sale with a new customer id, a scanned bar code and the quantity purchased.
  * 
  * Note: JavaDoc is not complete yet!
  *
- * @author jmiller
- * @version 14.10.01 alpha
+ * @author John Miller
+ * @version 1.0.0
  */
 public class Startup {
-
+    
     /**
-     * @param args the command line arguments
+     * Starts program by creating a new POS Register object.
+     * @param args - not used
      */
     public static void main(String[] args) {
-        PointOfSaleRegister sale1 = new PointOfSaleRegister();
-        sale1.startNewSale("00002060");
-        sale1.addLineItem("886878841132", 1);
-        sale1.addLineItem("008498255", 2);
-        sale1.completeSale();
         
-        PointOfSaleRegister sale2 = new PointOfSaleRegister();
-        sale2.startNewSale("0");
-        sale2.addLineItem("017133562060", 1);
-        sale2.addLineItem("009270653", 2);
-        sale2.addLineItem("001357375", 5);
-        sale2.completeSale();
+        PointOfSaleRegister sale = new PointOfSaleRegister(new FakeDatabase());
+        sale.startNewSale("00002060");
+        sale.addLineItem("878841132", 1);
+        sale.addLineItem("008498255", 2);
+        sale.completeSale();
+
+        sale.startNewSale("00000000");
+        sale.addLineItem("133562060", 1);
+        sale.addLineItem("009270653", 2);
+        sale.addLineItem("001357375", 5);
+        sale.completeSale();
     }
 }
