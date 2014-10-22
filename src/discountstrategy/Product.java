@@ -1,7 +1,7 @@
 package discountstrategy;
 
 /**
- * This class is used to add or retrieve product data from the 
+ * This class is used to add or retrieve product data from the
  *
  * Note: JavaDoc is not complete yet!
  *
@@ -22,10 +22,13 @@ public class Product {
      * @param unitPrice
      * @param discountStrategy
      */
-    public Product(String productCode, String productDescription, double unitPrice, DiscountStrategy discountStrategy) {
-        this.productCode = productCode;
-        this.productDescription = productDescription;
-        this.unitPrice = unitPrice;
+    public Product(String productCode, String productDescription, double unitPrice, DiscountStrategy discountStrategy) throws IllegalArgumentException {
+        setProductCode(productCode);
+        setProductDescription(productDescription);
+        setUnitPrice(unitPrice);
+        if (discountStrategy == null) {
+            throw new IllegalArgumentException("A valid Discount Strategy is requried.");
+        }
         this.discountStrategy = discountStrategy;
     }
 
@@ -59,7 +62,13 @@ public class Product {
      * @param unitPrice
      * @return
      */
-    public final double getDiscountAmount(int quantityPurchased, double unitPrice) {
+    public final double getDiscountAmount(int quantityPurchased, double unitPrice) throws IllegalArgumentException {
+        if (quantityPurchased <= ApplicationConstants.ZERO) {
+            throw new IllegalArgumentException("Purchased quantity must be greater than 0.");
+        }
+        if (unitPrice < ApplicationConstants.ZERO) {
+            throw new IllegalArgumentException("Unit price cannot be lass than 0.");
+        }
         return discountStrategy.getDiscountAmount(quantityPurchased, unitPrice);
     }
 
@@ -71,36 +80,29 @@ public class Product {
         return discountStrategy;
     }
 
-//    /**
-//     *
-//     * @param productCode
-//     */
-//    public final void setProductCode(String productCode) {
-//        this.productCode = productCode;
-//    }
-//
-//    /**
-//     *
-//     * @param productDescription
-//     */
-//    public final void setProductDescription(String productDescription) {
-//        this.productDescription = productDescription;
-//    }
-//
-//    /**
-//     *
-//     * @param unitPrice
-//     */
-//    public final void setUnitPrice(double unitPrice) {
-//        this.unitPrice = unitPrice;
-//    }
-//
-//    /**
-//     *
-//     * @param discountStrategy
-//     */
-//    public final void setDiscountType(DiscountStrategy discountStrategy) {
-//        this.discountStrategy = discountStrategy;
-//    }
+    public final void setProductCode(String productCode) {
+        if (productCode == null || productCode.length() == ApplicationConstants.ZERO) {
+            throw new IllegalArgumentException(ApplicationConstants.PRODUCT_CODE_ERROR);
+        }
+        this.productCode = productCode;
+    }
+
+    public final void setProductDescription(String productDescription) {
+        if (productDescription == null || productDescription.length() == ApplicationConstants.ZERO) {
+            throw new IllegalArgumentException(ApplicationConstants.PRODUCT_DESCRIPTION_ERROR);
+        }
+        this.productDescription = productDescription;
+    }
+
+    public final void setUnitPrice(double unitPrice) {
+        if (unitPrice < ApplicationConstants.ZERO) {
+            throw new IllegalArgumentException(ApplicationConstants.UNIT_PRICE_ERROR);
+        }
+        this.unitPrice = unitPrice;
+    }
+
+    public void setDiscountStrategy(DiscountStrategy discountStrategy) {
+        this.discountStrategy = discountStrategy;
+    }
 
 }

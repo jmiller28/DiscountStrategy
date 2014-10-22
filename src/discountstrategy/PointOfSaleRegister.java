@@ -20,7 +20,7 @@ public class PointOfSaleRegister {
      */
     public PointOfSaleRegister(DataAccessStrategy db) {
         this.db = db;
-        this.receiptStrategy = receiptStrategy;
+//        this.receiptStrategy = receiptStrategy;
     }
 
     /**

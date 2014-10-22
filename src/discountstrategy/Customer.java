@@ -19,8 +19,8 @@ public class Customer {
      * @param customerName 
      */
     public Customer(String customerNumber, String customerName) {
-        this.customerNumber = customerNumber;
-        this.customerName = customerName;
+        setCustomerNumber(customerNumber);
+        setCustomerName(customerName);
     }
 
     /**
@@ -44,6 +44,9 @@ public class Customer {
      * @param customerNumber 
      */
     public final void setCustomerNumber(String customerNumber) {
+        if (customerNumber == null || customerNumber.length() == ApplicationConstants.ZERO) {
+            throw new IllegalArgumentException(ApplicationConstants.CUSTOMER_NUMBER_ERROR);
+        }
         this.customerNumber = customerNumber;
     }
 
@@ -52,6 +55,9 @@ public class Customer {
      * @param customerName 
      */
     public final void setCustomerName(String customerName) {
+        if (customerName == null || customerName.length() == ApplicationConstants.ZERO) {
+            throw new IllegalArgumentException(ApplicationConstants.CUSTOMER_NAME_ERROR);
+        }
         this.customerName = customerName;
     }
 

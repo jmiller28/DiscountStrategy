@@ -12,8 +12,8 @@ public class ReceiptLineItem {
 
     private Product product;
     private int quantityPurchased;
-//    private String productCode;
-    private int minimumQuantity = 1;
+//    private int minimumQuantity = 1;
+    public static final int ZERO = 0;
 
     /**
      * 
@@ -21,10 +21,13 @@ public class ReceiptLineItem {
      * @param quantityPurchased 
      */
     public ReceiptLineItem(Product product, int quantityPurchased) {
-        if (product == null || quantityPurchased < minimumQuantity) {
-            throw new IllegalArgumentException();
+        if (product == null) {
+            throw new IllegalArgumentException("A valid Product Database is requried.");
         }
         this.product = product;
+        if (quantityPurchased < ZERO) {
+            throw new IllegalArgumentException("Purchased quantity must be greater than 0.");
+        }
         this.quantityPurchased = quantityPurchased;
     }
 

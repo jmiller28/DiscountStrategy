@@ -3,8 +3,9 @@ package discountstrategy;
 import java.text.NumberFormat;
 
 /**
- * This class needs to lookup the customer info by using the customer number. needs to work with the lineItem array to store items and retrieve totals. 
- * 
+ * This class needs to lookup the customer info by using the customer number.
+ * needs to work with the lineItem array to store items and retrieve totals.
+ *
  * Note: JavaDoc is not complete yet!
  *
  * @author John Miller
@@ -18,74 +19,65 @@ public class Receipt {
     private double salesTaxRate = .056;
     private String receiptMessage = "Thank you for shopping at Kohls!";
     private NumberFormat nf = NumberFormat.getCurrencyInstance();
-   
+
     /**
-     * 
+     *
      * @param customerNumber
-     * @param db 
+     * @param db
      */
-    public Receipt(String customerNumber, DataAccessStrategy db) {
+    public Receipt(String customerNumber, DataAccessStrategy db) throws IllegalArgumentException {
+
+        if (customerNumber == null || customerNumber.length() == ApplicationConstants.ZERO) {
+            throw new IllegalArgumentException("A valid customer number is requried.");
+        }
         this.customer = db.customerSearch(customerNumber);
+        if (db == null) {
+            throw new IllegalArgumentException("A valid Data Access Strategy is requried.");
+        }
         this.db = db;
+
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public final ReceiptLineItem[] getReceiptLineItems() {
         return receiptLineItem;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public final Customer getCustomer() {
         return customer;
     }
 
     /**
-     * 
-     * @return 
-     */
-    public final String getReceiptMessage() {
-        return receiptMessage;
-    }
-
-    /**
-     * 
-     * @param customer 
-     */
-    public final void setCustomer(Customer customer) {
-        //validation
-        this.customer = customer;
-    }
-
-    /**
-     * 
-     * @param receiptMessage 
-     */
-    public final void setReceiptMessage(String receiptMessage) {
-        //validation
-        this.receiptMessage = receiptMessage;
-    }
-
-    /**
-     * 
+     *
      * @param productCode
-     * @param quantityPurchased 
+     * @param quantityPurchased
      */
     public final void addLineItem(String productCode, int quantityPurchased) {
+        if (productCode == null || productCode.length() == ApplicationConstants.ZERO) {
+            throw new IllegalArgumentException("A valid product code is requried.");
+        }
+        if (quantityPurchased <= ApplicationConstants.ZERO) {
+            throw new IllegalArgumentException("Purchased quantity must be greater than 0.");
+        }
         ReceiptLineItem lineItem = new ReceiptLineItem(db.productSearch(productCode), quantityPurchased);
         addToArray(lineItem);
     }
 
     /**
-     * 
-     * @param lineItem 
+     *
+     * @param lineItem
      */
     public final void addToArray(ReceiptLineItem lineItem) {
+        if (lineItem == null) {
+            throw new IllegalArgumentException("A valid line item is requried.");
+        }
         ReceiptLineItem[] tempItems = new ReceiptLineItem[receiptLineItem.length + 1];
         System.arraycopy(receiptLineItem, 0, tempItems, 0, receiptLineItem.length);
         tempItems[receiptLineItem.length] = lineItem;
@@ -93,7 +85,7 @@ public class Receipt {
     }
 
     /**
-     * 
+     *
      */
     public final void outputReceipt() {
         double subtotal = 0;
@@ -120,8 +112,8 @@ public class Receipt {
         System.out.println("|  Sub Totals\t\t\t\t\t\t\t\t" + nf.format(discountTotal) + "\t\t" + nf.format(subtotal) + "\t\t|");
         System.out.println("|  Sales Tax \t\t\t\t\t\t\t\t\t\t" + nf.format(taxTotal) + "\t\t|");
         System.out.println("|  Sale Total \t\t\t\t\t\t\t\t\t\t" + nf.format(grandTtotal) + "\t\t|");
-        System.out.println("|  " + getReceiptMessage() + "\t\t\t\t\t\t\t\t\t|");
+        System.out.println("|  " + receiptMessage + "\t\t\t\t\t\t\t\t\t|");
         System.out.println("|*******************************************************************************************************|\n\n");
-    }
 
+    }
 }
